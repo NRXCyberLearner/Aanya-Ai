@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Aanya 💜 | Raj ❤️ Silpi</title>
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Marked.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f9fafb;
+    color: #111827;
+    font-size: 14px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  /* Girl Mode Styles - Pink Theme */
+  body.girl-mode {
+    background: #fff0f5 !important;
+  }
+  
+  body.girl-mode .bg-white {
+    background: #ffe4ec !important;
+  }
+  
+  body.girl-mode .top-bar {
+    background: #ffd9e6 !important;
+    border-bottom-color: #ffb7c5 !important;
+  }
+  
+  body.girl-mode .input-area {
+    background: #ffd9e6 !important;
+    border-top-color: #ffb7c5 !important;
+  }
+  
+  body.girl-mode #sidebar {
+    background: #ffe4ec !important;
+  }
+  
+  body.girl-mode .chat-item:hover {
+    background: #ffd0df !important;
+  }
+  
+  body.girl-mode .chat-item.active {
+    background: #ffb7c5 !important;
+  }
+  
+  body.girl-mode .user-message {
+    background: #ff69b4 !important;
+  }
+  
+  body.girl-mode .thinking-wrapper {
+    background: #ffe0e8 !important;
+  }
+  
+  body.girl-mode .speak-btn {
+    border-color: #ff99cc !important;
+    color: #ff69b4 !important;
+  }
+  
+  body.girl-mode .speak-btn:hover {
+    background: #ffd0df !important;
+  }
+  
+  body.girl-mode .speak-btn.playing {
+    background: #ff69b4 !important;
+    border-color: #ff69b4 !important;
+  }
+  
+  body.girl-mode #sendBtn, body.girl-mode #voiceInputBtn {
+    background: #ff69b4 !important;
+  }
+  
+  body.girl-mode #voiceInputBtn.listening {
+    background: #ff3366 !important;
+  }
+  
+  body.girl-mode .voice-controls-panel {
+    background: #ffe4ec !important;
+    border-color: #ffb7c5 !important;
+  }
+  
+  body.girl-mode .voice-test-btn {
+    background: #ffd9e6 !important;
+    color: #ff69b4 !important;
+  }
+  
+  body.girl-mode .modal-content {
+    background: #ffe4ec !important;
+  }
+  
+  body.girl-mode .modal-btn.cancel {
+    background: #ffd0df !important;
+    color: #ff69b4 !important;
+  }
+  
+  body.girl-mode .modal-btn.confirm {
+    background: #ff69b4 !important;
+  }
+  
+  body.girl-mode .credit-text {
+    color: #ff99cc !important;
+  }
+  
+  body.girl-mode .voice-circle {
+    background: radial-gradient(circle, rgba(255,105,180,0.25) 0%, rgba(255,105,180,0.08) 70%);
+    border-color: rgba(255,105,180,0.6);
+  }
+  
+  body.girl-mode .voice-circle.speaking {
+    background: radial-gradient(circle, rgba(255,105,180,0.9) 0%, rgba(255,51,102,0.5) 70%);
+    border-color: rgba(255,105,180,0.9);
+    box-shadow: 0 0 40px rgba(255,105,180,0.9);
+  }
+  
+  body.girl-mode .code-box-premium, body.girl-mode .code-loading-premium {
+    border-color: #ff99cc;
+  }
+  
+  body.girl-mode .code-header {
+    background: #ffd0df;
+  }
+  
+  body.girl-mode .code-title {
+    color: #ff69b4;
+  }
+  
+  .center-stack {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 45;
+    pointer-events: none;
+  }
+  
+  .voice-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, rgba(59,130,246,0.08) 70%);
+    border: 2px solid rgba(59,130,246,0.4);
+    transition: all 0.2s ease;
+    box-shadow: 0 0 15px rgba(59,130,246,0.25);
+    margin-bottom: 20px;
+  }
+  
+  .voice-circle.speaking {
+    background: radial-gradient(circle, rgba(59,130,246,0.9) 0%, rgba(236,72,153,0.5) 70%);
+    border-color: rgba(236,72,153,0.9);
+    box-shadow: 0 0 40px rgba(59,130,246,0.9), 0 0 60px rgba(236,72,153,0.6);
+    animation: voiceGlow 0.3s ease-in-out infinite alternate;
+  }
+  
+  .voice-circle.listening {
+    background: radial-gradient(circle, rgba(34,197,94,0.9) 0%, rgba(59,130,246,0.6) 70%);
+    border-color: rgba(34,197,94,0.9);
+    box-shadow: 0 0 40px rgba(34,197,94,0.9), 0 0 60px rgba(59,130,246,0.6);
+    animation: voiceGlow 0.2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes voiceGlow {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.08); opacity: 1; }
+  }
+  
+  .voice-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(59,130,246,0.3);
+    filter: blur(12px);
+    transition: all 0.2s ease;
+    z-index: -1;
+  }
+  
+  .voice-circle.speaking::after, .voice-circle.listening::after {
+    filter: blur(18px);
+    width: 85px;
+    height: 85px;
+    animation: innerGlow 0.3s ease-in-out infinite alternate;
+  }
+  
+  @keyframes innerGlow {
+    0% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.9); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  }
+  
+  .credit-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(244, 114, 182, 0.5);
+    letter-spacing: 1px;
+    text-align: center;
+    font-family: 'Segoe UI', cursive;
+    white-space: nowrap;
+    background: transparent;
+    padding: 6px 16px;
+    border-radius: 40px;
+    margin-top: 4px;
+  }
+  
+  body.dark .credit-text {
+    color: rgba(249, 168, 212, 0.55);
+  }
+  
+  body.dark {
+    background: #111827;
+    color: #f9fafb;
+  }
+  
+  body.dark .bg-white {
+    background: #1f2937 !important;
+  }
+  
+  body.dark.girl-mode {
+    background: #2d1b2a !important;
+  }
+  
+  body.dark.girl-mode .bg-white,
+  body.dark.girl-mode #sidebar,
+  body.dark.girl-mode .top-bar,
+  body.dark.girl-mode .input-area,
+  body.dark.girl-mode .voice-controls-panel,
+  body.dark.girl-mode .modal-content {
+    background: #3d2a38 !important;
+  }
+  
+  #app {
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    width: 100dvw;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    z-index: 1;
+  }
+  
+  #chatContainer {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px;
+    padding-bottom: 75px;
+    background: transparent;
+  }
+  
+  .ai-message-content {
+    transition: none;
+    will-change: contents;
+  }
+  
+  .normal-text {
+    font-family: inherit;
+    margin: 6px 0;
+    line-height: 1.5;
+    word-break: break-word;
+    font-size: 13px;
+  }
+  
+  .user-message, .thinking-wrapper, .code-box-premium, .code-loading-premium {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .ai-message {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .text-small p, .text-small li, .text-small div:not(.code-box *) {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+  
+  .text-medium p, .text-medium li, .text-medium div:not(.code-box *) {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+  
+  .text-large p, .text-large li, .text-large div:not(.code-box *) {
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+  }
+  
+  .user-message {
+    background: #3b82f6;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 16px 16px 4px 16px;
+    max-width: 85%;
+    word-break: break-word;
+    margin-left: auto;
+    font-size: 14px;
+  }
+  
+  .ai-message {
+    width: 100%;
+    max-width: 100%;
+    word-break: break-word;
+  }
+  
+  .thinking-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #f3f4f6;
+    border-radius: 16px 16px 16px 4px;
+    width: fit-content;
+    margin-bottom: 8px;
+  }
+  
+  body.dark .thinking-wrapper {
+    background: #374151;
+  }
+  
+  .thinking-dots {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+  
+  .thinking-dots span {
+    width: 6px;
+    height: 6px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: thinkingBounce 1.4s infinite ease-in-out both;
+  }
+  
+  @keyframes thinkingBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+  
+  .thinking-text {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  body.dark .thinking-text {
+    color: #9ca3af;
+  }
+  
+  .ai-message-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .ai-message-header {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-bottom: 2px;
+  }
+  
+  .speak-btn {
+    background: transparent;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+    z-index: 3;
+    transition: all 0.2s ease;
+  }
+  
+  .speak-btn:hover {
+    background: #f3f4f6;
+    transform: scale(1.05);
+  }
+  
+  .speak-btn.playing {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+    animation: pulse 1s infinite;
+  }
+  
+  .speak-btn.paused {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: white;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  .code-box-premium {
+    background: #0a0c10;
+    border-radius: 12px;
+    margin: 10px 0;
+    overflow: hidden;
+    border: 1px solid #2d2d3a;
+    width: 100%;
+  }
+  
+  .code-loading-premium {
+    background: #0a0c10;
+    border-radius: 12px;
+    margin: 10px 0;
+    border: 1px solid #2d2d3a;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    min-height: 140px;
+  }
+  
+  .code-loading-premium .loading-spinner {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .code-loading-premium .spinner-circle {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(59,130,246,0.2);
+    border-top: 4px solid #3b82f6;
+    border-right: 4px solid #8b5cf6;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  }
+  
+  .code-loading-premium .spinner-pulse {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(139,92,246,0.1) 70%);
+    border-radius: 50%;
+    animation: pulseGlow 1s ease-in-out infinite;
+  }
+  
+  .code-loading-premium .loading-text {
+    font-size: 12px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: monospace;
+    flex-shrink: 0;
+  }
+  
+  .code-loading-premium .loading-dots {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  
+  .code-loading-premium .loading-dots span {
+    width: 4px;
+    height: 4px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: dotBounce 1.4s infinite ease-in-out both;
+  }
+  
+  .code-loading-premium .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+  .code-loading-premium .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+  
+  @keyframes dotBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+  
+  .code-box-premium .code-header {
+    background: #1a1d24;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .code-box-premium .code-title {
+    color: #9ca3af;
+    font-size: 10px;
+    font-family: monospace;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .code-box-premium .copy-btn-premium {
+    background: rgba(59,130,246,0.2);
+    border: 1px solid rgba(59,130,246,0.3);
+    color: #e5e7eb;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .code-box-premium .copy-btn-premium:hover {
+    background: rgba(59,130,246,0.4);
+    border-color: #3b82f6;
+  }
+  
+  .code-content-premium {
+    padding: 10px;
+    overflow-x: auto;
+    max-height: 300px;
+    background: #0a0c10;
+  }
+  
+  .code-content-premium pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  
+  .chat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .chat-item:hover {
+    background: #f3f4f6;
+  }
+  
+  body.dark .chat-item:hover {
+    background: #374151;
+  }
+  
+  .chat-item.active {
+    background: #e5e7eb;
+  }
+  
+  body.dark .chat-item.active {
+    background: #4b5563;
+  }
+  
+  .chat-title {
+    flex: 1;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .chat-actions {
+    display: flex;
+    gap: 2px;
+    opacity: 0;
+  }
+  
+  .chat-item:hover .chat-actions {
+    opacity: 1;
+  }
+  
+  .action-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #6b7280;
+    font-size: 11px;
+  }
+  
+  .input-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    padding: 6px 8px;
+    z-index: 30;
+  }
+  
+  body.dark .input-area {
+    background: #1f2937;
+  }
+  
+  @media (min-width: 768px) {
+    .input-area {
+      left: 240px;
+    }
+  }
+  
+  #userInput {
+    min-height: 36px;
+    max-height: 80px;
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 20px;
+  }
+  
+  #sendBtn, #voiceInputBtn {
+    padding: 0 14px;
+    font-size: 12px;
+    border-radius: 20px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #voiceInputBtn {
+    background: #8b5cf6;
+  }
+  
+  #voiceInputBtn.listening {
+    background: #ef4444;
+    animation: pulse 1s infinite;
+  }
+  
+  #sidebar {
+    width: 240px;
+    background: white;
+  }
+  
+  body.dark #sidebar {
+    background: #1f2937;
+  }
+  
+  #newChatBtn {
+    padding: 8px;
+    font-size: 12px;
+  }
+  
+  .top-bar {
+    padding: 6px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+  }
+  
+  body.dark .top-bar {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  #openSidebar, #voiceControlsBtn, #darkToggle, #stopAllAudioBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  body.dark #openSidebar, body.dark #voiceControlsBtn, 
+  body.dark #darkToggle, body.dark #stopAllAudioBtn {
+    background: #374151;
+    color: #e5e7eb;
+  }
+  
+  .text-size-controls {
+    display: flex;
+    gap: 2px;
+    background: #f3f4f6;
+    padding: 2px;
+    border-radius: 20px;
+  }
+  
+  body.dark .text-size-controls {
+    background: #374151;
+  }
+  
+  .size-btn {
+    background: transparent;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 11px;
+    cursor: pointer;
+    color: #6b7280;
+  }
+  
+  .size-btn.active {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  .voice-controls-panel {
+    position: fixed;
+    bottom: 65px;
+    right: 8px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    width: 280px;
+    z-index: 50;
+    display: none;
+    border: 1px solid #e5e7eb;
+    font-size: 12px;
+  }
+  
+  body.dark .voice-controls-panel {
+    background: #1f2937;
+    border-color: #4b5563;
+  }
+  
+  .voice-controls-panel.active {
+    display: block;
+  }
+  
+  .voice-control-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  
+  .voice-control-item {
+    margin-bottom: 8px;
+  }
+  
+  .voice-control-label {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+  
+  .voice-select, .voice-test-btn {
+    font-size: 11px;
+    padding: 5px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .voice-test-btn {
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .voice-test-btn:hover {
+    background: #e5e7eb;
+    transform: scale(1.02);
+  }
+  
+  body.dark .voice-test-btn {
+    background: #374151;
+    color: white;
+  }
+  
+  body.dark .voice-test-btn:hover {
+    background: #4b5563;
+  }
+  
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+  }
+  
+  .modal.active {
+    display: flex;
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  body.dark .modal-content {
+    background: #1f2937;
+  }
+  
+  .modal-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 12px;
+    border: 1px solid #d1d5db;
+  }
+  
+  body.dark .modal-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  
+  .modal-btn {
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .modal-btn.cancel {
+    background: #e5e7eb;
+    color: #374151;
+  }
+  
+  .modal-btn.confirm {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  .modal-btn.delete-confirm {
+    background: #ef4444;
+    color: white;
+  }
+  
+  .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    margin-bottom: 5px;
+  }
+  
+  .speak-btn:hover .tooltip {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="center-stack">
+  <div id="voiceCircle" class="voice-circle"></div>
+  <div class="credit-text">✨ created by Raj ❤️ Silpi ✨</div>
+</div>
+
+<div id="app" class="hidden">
+  <aside id="sidebar" class="fixed md:relative z-40 md:z-auto w-60 border-r h-full transform -translate-x-full md:translate-x-0 transition-transform duration-300 flex flex-col">
+    <div class="p-2 border-b flex justify-between items-center">
+      <h2 class="font-bold text-sm">Aanya 💜</h2>
+      <button id="closeSidebar" class="md:hidden text-lg">✕</button>
+    </div>
+    
+    <div class="p-2">
+      <button id="newChatBtn" class="w-full bg-blue-500 text-white py-2 rounded-lg flex items-center justify-center gap-1 text-sm">
+        ✨ New Chat
+      </button>
+    </div>
+
+    <div id="chatList" class="flex-1 overflow-y-auto px-2"></div>
+
+    <div class="p-2 border-t">
+      <button id="settingsBtn" class="w-full text-gray-600 py-2 flex items-center justify-center gap-1 text-xs">
+        ⚙️ Settings
+      </button>
+    </div>
+  </aside>
+
+  <main class="flex-1 flex flex-col h-full relative">
+    <div class="top-bar flex items-center justify-between">
+      <button id="openSidebar" class="md:hidden">☰</button>
+      <h1 class="font-semibold text-sm">Aanya</h1>
+      <div class="flex items-center gap-1">
+        <div class="text-size-controls">
+          <button class="size-btn" data-size="small">A-</button>
+          <button class="size-btn active" data-size="medium">A</button>
+          <button class="size-btn" data-size="large">A+</button>
+        </div>
+        <button id="stopAllAudioBtn" title="Stop All Audio">⏹️</button>
+        <button id="voiceControlsBtn" title="Voice Settings">🎤</button>
+        <button id="darkToggle" title="Dark mode">🌙</button>
+      </div>
+    </div>
+
+    <div id="voiceControlsPanel" class="voice-controls-panel">
+      <div class="voice-control-header">
+        <span>🎤 Voice Settings</span>
+        <button class="close-voice-panel" id="closeVoicePanel">✕</button>
+      </div>
+      
+      <!-- Girl Mode Toggle inside Voice Panel -->
+      <div class="voice-control-item" style="border-bottom: 2px solid #ff99cc; padding-bottom: 8px; margin-bottom: 12px;">
+        <div class="voice-control-label">🌸 Girl Mode - Cute Pink Theme</div>
+        <label class="flex items-center gap-2" style="cursor: pointer;">
+          <input type="checkbox" id="girlModeCheckbox" style="width: 18px; height: 18px; cursor: pointer;"> 
+          <span style="font-size: 13px;">💖 Enable Cute Pink Mode 💖</span>
+        </label>
+        <div style="font-size: 10px; color: #ff69b4; margin-top: 4px;">✨ Makes interface pink & cute for girls ✨</div>
+      </div>
+      
+      <div class="voice-control-item">
+        <div class="voice-control-label">🌐 Language Priority</div>
+        <select id="languagePriority" class="voice-select">
+          <option value="hi">🇮🇳 Hindi First</option>
+          <option value="en">🇬🇧 English First</option>
+          <option value="auto" selected>🤖 Auto</option>
+        </select>
+      </div>
+      
+      <div class="voice-control-item">
+        <div class="voice-control-label">🗣️ Auto-Speak AI Responses</div>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="autoSpeakToggle" checked> 
+          <span>Enable Auto-Speak</span>
+        </label>
+      </div>
+      
+      <div class="voice-control-item">
+        <div class="voice-control-label">Voice</div>
+        <select id="voiceSelect" class="voice-select"></select>
+      </div>
+      
+      <div class="voice-control-item">
+        <div class="voice-control-label">Speed: <span id="rateValue">1.0</span></div>
+        <input type="range" id="rateSlider" min="0.5" max="2" step="0.1" value="1.0" class="w-full">
+      </div>
+      
+      <div class="voice-control-item">
+        <div class="voice-control-label">Pitch: <span id="pitchValue">1.0</span></div>
+        <input type="range" id="pitchSlider" min="0.5" max="2" step="0.1" value="1.0" class="w-full">
+      </div>
+      
+      <button id="testVoiceBtn" class="voice-test-btn">🔊 Test Voice</button>
+    </div>
+
+    <div id="chatContainer" class="flex-1 overflow-y-auto text-medium"></div>
+
+    <div class="input-area">
+      <div class="flex gap-2 max-w-4xl mx-auto">
+        <textarea id="userInput" rows="1" placeholder="Type or click 🎤 to speak..." class="flex-1 resize-none border rounded-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white" style="min-height: 36px;"></textarea>
+        <button id="voiceInputBtn" title="Voice Input">🎤</button>
+        <button id="sendBtn" class="px-4 rounded-full font-medium">Send</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="renameModal" class="modal"><div class="modal-content"><h3 class="font-bold mb-2">Rename</h3><input type="text" id="renameInput" class="modal-input"><div class="modal-buttons"><button id="cancelRename" class="modal-btn cancel">Cancel</button><button id="confirmRename" class="modal-btn confirm">Save</button></div></div></div>
+<div id="deleteModal" class="modal"><div class="modal-content"><h3 class="font-bold mb-2">Delete Chat?</h3><div class="modal-buttons"><button id="cancelDelete" class="modal-btn cancel">Cancel</button><button id="confirmDelete" class="modal-btn delete-confirm">Delete</button></div></div></div>
+<div id="settingsModal" class="modal"><div class="modal-content"><h2 class="font-bold mb-2">Settings</h2><input id="apiKeyInput" type="password" class="modal-input" placeholder="OpenRouter API Key"><input id="modelInput" type="text" value="deepseek/deepseek-r1:free" class="modal-input"><textarea id="systemPromptInput" class="modal-input" rows="2" placeholder="System Prompt"></textarea><div class="modal-buttons"><button id="closeSettings" class="modal-btn cancel">Cancel</button><button id="saveSettings" class="modal-btn confirm">Save</button></div></div></div>
+
+<script>
+(function(){
+  const app = document.getElementById("app");
+  const loading = document.getElementById("loading");
+  const chatContainer = document.getElementById("chatContainer");
+  const chatList = document.getElementById("chatList");
+  const darkToggle = document.getElementById("darkToggle");
+  const sidebar = document.getElementById("sidebar");
+  const newChatBtn = document.getElementById("newChatBtn");
+  const sendBtn = document.getElementById("sendBtn");
+  const userInput = document.getElementById("userInput");
+  const settingsBtn = document.getElementById("settingsBtn");
+  const stopAllAudioBtn = document.getElementById("stopAllAudioBtn");
+  const voiceControlsBtn = document.getElementById("voiceControlsBtn");
+  const voiceControlsPanel = document.getElementById("voiceControlsPanel");
+  const closeVoicePanel = document.getElementById("closeVoicePanel");
+  const voiceSelect = document.getElementById("voiceSelect");
+  const rateSlider = document.getElementById("rateSlider");
+  const pitchSlider = document.getElementById("pitchSlider");
+  const rateValue = document.getElementById("rateValue");
+  const pitchValue = document.getElementById("pitchValue");
+  const testVoiceBtn = document.getElementById("testVoiceBtn");
+  const languagePriority = document.getElementById("languagePriority");
+  const autoSpeakToggle = document.getElementById("autoSpeakToggle");
+  const voiceCircle = document.getElementById("voiceCircle");
+  const voiceInputBtn = document.getElementById("voiceInputBtn");
+  const girlModeCheckbox = document.getElementById("girlModeCheckbox");
+  
+  let chats = JSON.parse(localStorage.getItem("aanya_chats") || "[]");
+  let currentChatId = null;
+  let apiKey = localStorage.getItem("aanya_api_key") || "";
+  let model = localStorage.getItem("aanya_model") || "deepseek/deepseek-r1:free";
+  let systemPrompt = localStorage.getItem("aanya_system_prompt") || "";
+  let selectedChatId = null;
+  let currentSize = localStorage.getItem("aanya_text_size") || "medium";
+  let voiceSettings = JSON.parse(localStorage.getItem("aanya_voice_settings") || '{"rate":1.0,"pitch":1.0,"voice":null,"languagePriority":"auto","autoSpeak":true}');
+  let availableVoices = [];
+  let currentUtterance = null;
+  let recognition = null;
+  let isListening = false;
+  let activeSpeechMap = new Map();
+  let isUserScrolledUp = false;
+  let userScrollTimeout = null;
+  
+  // Girl Mode
+  let isGirlMode = localStorage.getItem("aanya_girl_mode") === "true";
+  
+  function applyGirlMode() {
+    if (isGirlMode) {
+      document.body.classList.add("girl-mode");
+      if (girlModeCheckbox) girlModeCheckbox.checked = true;
+    } else {
+      document.body.classList.remove("girl-mode");
+      if (girlModeCheckbox) girlModeCheckbox.checked = false;
+    }
+    localStorage.setItem("aanya_girl_mode", isGirlMode);
+  }
+  
+  function toggleGirlMode() {
+    isGirlMode = !isGirlMode;
+    applyGirlMode();
+  }
+  
+  if (girlModeCheckbox) girlModeCheckbox.onchange = toggleGirlMode;
+  applyGirlMode();
+  
+  // AUTO-SCROLL FUNCTION - SIMPLE AND RELIABLE
+  function scrollToBottom() {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+  
+  // Check if user is at bottom
+  function isAtBottom() {
+    return chatContainer.scrollHeight - chatContainer.scrollTop - chatContainer.clientHeight < 50;
+  }
+  
+  // Auto-scroll only if user is at bottom or not manually scrolled up
+  function autoScrollIfNeeded() {
+    if (!isUserScrolledUp) {
+      scrollToBottom();
+    }
+  }
+  
+  // Detect user scroll
+  chatContainer.addEventListener('scroll', function() {
+    if (!isAtBottom()) {
+      isUserScrolledUp = true;
+      if (userScrollTimeout) clearTimeout(userScrollTimeout);
+      userScrollTimeout = setTimeout(() => {
+        isUserScrolledUp = false;
+      }, 3000);
+    } else {
+      isUserScrolledUp = false;
+    }
+  });
+  
+  let updateTimer = null;
+  let renderFrame = null;
+
+  // Speech Recognition Setup
+  function initSpeechRecognition() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      console.warn("Speech recognition not supported");
+      voiceInputBtn.disabled = true;
+      voiceInputBtn.title = "Speech not supported";
+      return;
+    }
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'hi-IN,en-IN,en-US';
+    
+    recognition.onstart = () => {
+      isListening = true;
+      voiceInputBtn.classList.add("listening");
+      voiceCircle.classList.add("listening");
+      voiceInputBtn.innerHTML = "⏹️";
+    };
+    
+    recognition.onend = () => {
+      isListening = false;
+      voiceInputBtn.classList.remove("listening");
+      voiceCircle.classList.remove("listening");
+      voiceInputBtn.innerHTML = "🎤";
+    };
+    
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      userInput.value = transcript;
+      userInput.style.height = "36px";
+      userInput.style.height = Math.min(userInput.scrollHeight, 80) + "px";
+      setTimeout(() => sendMessage(), 100);
+    };
+    
+    recognition.onerror = (event) => {
+      console.error("Recognition error:", event.error);
+      isListening = false;
+      voiceInputBtn.classList.remove("listening");
+      voiceCircle.classList.remove("listening");
+      voiceInputBtn.innerHTML = "🎤";
+      if (event.error !== 'no-speech') {
+        alert("Voice recognition error: " + event.error);
+      }
+    };
+  }
+  
+  function startVoiceInput() {
+    if (!recognition) {
+      alert("Speech recognition not supported. Try Chrome, Edge, or Safari.");
+      return;
+    }
+    if (isListening) {
+      recognition.stop();
+    } else {
+      try {
+        recognition.start();
+      } catch(e) {
+        console.error("Failed to start recognition:", e);
+      }
+    }
+  }
+  
+  voiceInputBtn.onclick = startVoiceInput;
+
+  function startCircleGlow(type = 'speaking') {
+    voiceCircle.classList.remove('speaking', 'listening');
+    voiceCircle.classList.add(type);
+  }
+  
+  function stopCircleGlow() {
+    voiceCircle.classList.remove('speaking', 'listening');
+  }
+
+  // Dark Mode
+  function initDarkMode() {
+    if (localStorage.getItem("aanya_dark") === "true") {
+      document.body.classList.add("dark");
+      darkToggle.innerHTML = "☀️";
+    }
+  }
+  darkToggle.onclick = () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("aanya_dark", document.body.classList.contains("dark"));
+    darkToggle.innerHTML = document.body.classList.contains("dark") ? "☀️" : "🌙";
+  };
+  initDarkMode();
+
+  // Voice Controls
+  function initVoiceControls() {
+    function loadVoices() {
+      availableVoices = window.speechSynthesis.getVoices();
+      voiceSelect.innerHTML = '<option value="">✨ Auto</option>';
+      availableVoices.forEach(voice => {
+        const option = document.createElement("option");
+        option.value = voice.name;
+        option.textContent = voice.name.substring(0, 25) + (voice.lang ? ` (${voice.lang})` : "");
+        if (voiceSettings.voice === voice.name) option.selected = true;
+        voiceSelect.appendChild(option);
+      });
+    }
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+    rateSlider.value = voiceSettings.rate;
+    pitchSlider.value = voiceSettings.pitch;
+    rateValue.textContent = voiceSettings.rate;
+    pitchValue.textContent = voiceSettings.pitch;
+    if (languagePriority) languagePriority.value = voiceSettings.languagePriority || "auto";
+    if (autoSpeakToggle) autoSpeakToggle.checked = voiceSettings.autoSpeak !== false;
+    
+    rateSlider.oninput = () => { voiceSettings.rate = parseFloat(rateSlider.value); rateValue.textContent = voiceSettings.rate; saveVoiceSettings(); };
+    pitchSlider.oninput = () => { voiceSettings.pitch = parseFloat(pitchSlider.value); pitchValue.textContent = voiceSettings.pitch; saveVoiceSettings(); };
+    voiceSelect.onchange = () => { voiceSettings.voice = voiceSelect.value || null; saveVoiceSettings(); };
+    if (languagePriority) languagePriority.onchange = () => { voiceSettings.languagePriority = languagePriority.value; saveVoiceSettings(); };
+    if (autoSpeakToggle) autoSpeakToggle.onchange = () => { voiceSettings.autoSpeak = autoSpeakToggle.checked; saveVoiceSettings(); };
+    
+    testVoiceBtn.onclick = () => {
+      const testText = "नमस्ते! मैं आन्या हूं। राज और सिल्पी, आप कैसे हैं? Hello! I am Aanya.";
+      speakTextWithControls(testText, "test", testVoiceBtn);
+    };
+    
+    voiceControlsBtn.onclick = () => voiceControlsPanel.classList.toggle("active");
+    closeVoicePanel.onclick = () => voiceControlsPanel.classList.remove("active");
+    stopAllAudioBtn.onclick = () => { 
+      window.speechSynthesis.cancel(); 
+      stopCircleGlow(); 
+      currentUtterance = null;
+      activeSpeechMap.clear();
+      document.querySelectorAll('.speak-btn').forEach(btn => {
+        btn.classList.remove('playing', 'paused');
+        btn.innerHTML = '🔊';
+      });
+      if (testVoiceBtn) {
+        testVoiceBtn.classList.remove('playing', 'paused');
+        testVoiceBtn.innerHTML = '🔊 Test Voice';
+      }
+    };
+  }
+  
+  function saveVoiceSettings() { 
+    localStorage.setItem("aanya_voice_settings", JSON.stringify(voiceSettings)); 
+  }
+
+  // Text Size
+  function setTextSize(size) {
+    chatContainer.classList.remove("text-small", "text-medium", "text-large");
+    chatContainer.classList.add(`text-${size}`);
+    document.querySelectorAll(".size-btn").forEach(btn => {
+      btn.classList.remove("active");
+      if (btn.dataset.size === size) btn.classList.add("active");
+    });
+    localStorage.setItem("aanya_text_size", size);
+  }
+  document.querySelectorAll(".size-btn").forEach(btn => btn.onclick = () => setTextSize(btn.dataset.size));
+  setTextSize(currentSize);
+
+  // Speech functions
+  function speakTextWithControls(text, messageId, buttonElement = null) {
+    if (!text || text.trim() === "") return;
+    
+    const cleanText = text.replace(/```[\s\S]*?```/g, "").replace(/[#*_~]/g, "").replace(/\s+/g, " ").trim();
+    if (!cleanText) return;
+    
+    const existing = activeSpeechMap.get(messageId);
+    
+    if (existing && existing.utterance) {
+      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused && existing.state === 'playing') {
+        window.speechSynthesis.pause();
+        existing.state = 'paused';
+        if (buttonElement) {
+          buttonElement.classList.remove('playing');
+          buttonElement.classList.add('paused');
+          if (buttonElement === testVoiceBtn) {
+            buttonElement.innerHTML = '⏸️ Test Voice';
+          } else {
+            buttonElement.innerHTML = '⏸️';
+          }
+        }
+        stopCircleGlow();
+      } else if (window.speechSynthesis.paused && existing.state === 'paused') {
+        window.speechSynthesis.resume();
+        existing.state = 'playing';
+        if (buttonElement) {
+          buttonElement.classList.remove('paused');
+          buttonElement.classList.add('playing');
+          if (buttonElement === testVoiceBtn) {
+            buttonElement.innerHTML = '🔊 Test Voice';
+          } else {
+            buttonElement.innerHTML = '🔊';
+          }
+        }
+        startCircleGlow('speaking');
+      }
+      return;
+    }
+    
+    if (existing) {
+      window.speechSynthesis.cancel();
+    }
+    
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.rate = voiceSettings.rate;
+    utterance.pitch = voiceSettings.pitch;
+    
+    if (voiceSettings.languagePriority === "hi") {
+      utterance.lang = "hi-IN";
+    } else if (voiceSettings.languagePriority === "en") {
+      utterance.lang = "en-US";
+    }
+    
+    if (voiceSettings.voice) {
+      const v = availableVoices.find(v => v.name === voiceSettings.voice);
+      if (v) utterance.voice = v;
+    }
+    
+    utterance.onstart = () => { 
+      startCircleGlow('speaking');
+      if (buttonElement) {
+        buttonElement.classList.add('playing');
+        buttonElement.classList.remove('paused');
+        if (buttonElement === testVoiceBtn) {
+          buttonElement.innerHTML = '🔊 Test Voice';
+        } else {
+          buttonElement.innerHTML = '🔊';
+        }
+      }
+    };
+    
+    utterance.onpause = () => {
+      if (buttonElement) {
+        buttonElement.classList.remove('playing');
+        buttonElement.classList.add('paused');
+        if (buttonElement === testVoiceBtn) {
+          buttonElement.innerHTML = '⏸️ Test Voice';
+        } else {
+          buttonElement.innerHTML = '⏸️';
+        }
+      }
+      stopCircleGlow();
+    };
+    
+    utterance.onresume = () => {
+      if (buttonElement) {
+        buttonElement.classList.remove('paused');
+        buttonElement.classList.add('playing');
+        if (buttonElement === testVoiceBtn) {
+          buttonElement.innerHTML = '🔊 Test Voice';
+        } else {
+          buttonElement.innerHTML = '🔊';
+        }
+      }
+      startCircleGlow('speaking');
+    };
+    
+    utterance.onend = () => {
+      stopCircleGlow();
+      activeSpeechMap.delete(messageId);
+      if (buttonElement) {
+        buttonElement.classList.remove('playing', 'paused');
+        if (buttonElement === testVoiceBtn) {
+          buttonElement.innerHTML = '🔊 Test Voice';
+        } else {
+          buttonElement.innerHTML = '🔊';
+        }
+      }
+    };
+    
+    utterance.onerror = () => {
+      stopCircleGlow();
+      activeSpeechMap.delete(messageId);
+      if (buttonElement) {
+        buttonElement.classList.remove('playing', 'paused');
+        if (buttonElement === testVoiceBtn) {
+          buttonElement.innerHTML = '🔊 Test Voice';
+        } else {
+          buttonElement.innerHTML = '🔊';
+        }
+      }
+    };
+    
+    activeSpeechMap.set(messageId, { utterance, state: 'playing' });
+    currentUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  }
+  
+  function stopSpeechForMessage(messageId, buttonElement = null) {
+    const existing = activeSpeechMap.get(messageId);
+    if (existing && existing.utterance) {
+      window.speechSynthesis.cancel();
+      activeSpeechMap.delete(messageId);
+      if (buttonElement) {
+        buttonElement.classList.remove('playing', 'paused');
+        if (buttonElement === testVoiceBtn) {
+          buttonElement.innerHTML = '🔊 Test Voice';
+        } else {
+          buttonElement.innerHTML = '🔊';
+        }
+      }
+      stopCircleGlow();
+    }
+  }
+
+  // Chat Functions
+  function saveChats() { localStorage.setItem("aanya_chats", JSON.stringify(chats)); }
+  function newChat() {
+    const id = Date.now().toString();
+    chats.push({ id, title: "New Chat", messages: [] });
+    currentChatId = id;
+    saveChats();
+    renderChats();
+    renderMessages();
+    if (window.innerWidth < 768) sidebar.classList.add("-translate-x-full");
+  }
+  function selectChat(id) { 
+    currentChatId = id; 
+    renderChats(); 
+    renderMessages(); 
+    if (window.innerWidth < 768) sidebar.classList.add("-translate-x-full");
+    activeSpeechMap.clear();
+    window.speechSynthesis.cancel();
+    stopCircleGlow();
+  }
+  function getCurrentChat() { return chats.find(c => c.id === currentChatId); }
+
+  function renderChats() {
+    chatList.innerHTML = "";
+    chats.forEach(chat => {
+      const div = document.createElement("div");
+      div.className = `chat-item ${chat.id === currentChatId ? "active" : ""}`;
+      const title = document.createElement("span");
+      title.className = "chat-title";
+      title.textContent = chat.title;
+      title.onclick = () => selectChat(chat.id);
+      const actions = document.createElement("div");
+      actions.className = "chat-actions";
+      const renameBtn = document.createElement("button");
+      renameBtn.className = "action-btn";
+      renameBtn.innerHTML = "✏️";
+      renameBtn.onclick = (e) => { e.stopPropagation(); selectedChatId = chat.id; document.getElementById("renameInput").value = chat.title; document.getElementById("renameModal").classList.add("active"); };
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "action-btn";
+      deleteBtn.innerHTML = "🗑️";
+      deleteBtn.onclick = (e) => { e.stopPropagation(); selectedChatId = chat.id; document.getElementById("deleteModal").classList.add("active"); };
+      actions.appendChild(renameBtn);
+      actions.appendChild(deleteBtn);
+      div.appendChild(title);
+      div.appendChild(actions);
+      chatList.appendChild(div);
+    });
+  }
+
+  function escapeHtml(text) { const div = document.createElement("div"); div.textContent = text; return div.innerHTML; }
+  
+  window.copyCodePremium = function(id, btn) {
+    const code = document.getElementById(id).querySelector("code").textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.innerHTML = "✓ Copied!";
+      setTimeout(() => btn.innerHTML = "📋 Copy", 1500);
+    });
+  };
+  
+  window.handleSpeakWithControls = function(messageId, btn, event) {
+    if (event.type === 'contextmenu') {
+      event.preventDefault();
+      stopSpeechForMessage(messageId, btn);
+      return false;
+    }
+    const chat = getCurrentChat();
+    if (!chat) return;
+    const idx = parseInt(messageId.replace("msg-", ""));
+    const msg = chat.messages[idx];
+    if (msg && msg.role === "assistant") {
+      speakTextWithControls(msg.content, messageId, btn);
+    }
+  };
+
+  function isCodeBlockIncomplete(content) { 
+    const matches = content.match(/```/g);
+    if (!matches) return false;
+    return matches.length % 2 !== 0;
+  }
+  
+  function getCodeLoadingHTML(language = "code") {
+    return `<div class="code-loading-premium" style="min-height: 140px;">
+      <div class="loading-spinner">
+        <div class="spinner-circle"></div>
+        <div class="spinner-pulse"></div>
+      </div>
+      <div class="loading-text">
+        <span>⚡</span>
+        <span>Generating ${escapeHtml(language)} code...</span>
+        <div class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function formatResponse(content, messageId, isStreaming = true) {
+    if (!content) return "";
+    const hasIncomplete = isStreaming && isCodeBlockIncomplete(content);
+    let html = `<div class="ai-message-wrapper"><div class="ai-message-header"><button class="speak-btn" onclick="handleSpeakWithControls('${messageId}', this, event)" oncontextmenu="handleSpeakWithControls('${messageId}', this, event); return false;" title="Click to Play/Pause | Right-click to Stop">🔊</button></div><div class="ai-message-content">`;
+    
+    if (hasIncomplete) {
+      let pos = 0;
+      const regex = /```(\w*)\n([\s\S]*?)```/g;
+      let match;
+      
+      while ((match = regex.exec(content)) !== null) {
+        if (match.index > pos) {
+          const txt = content.substring(pos, match.index);
+          if (txt.trim()) {
+            html += `<div class="normal-text">${marked.parse(txt)}</div>`;
+          }
+        }
+        const id = "c-" + Date.now() + "-" + Math.random().toString(36).substr(2, 6);
+        html += `<div class="code-box-premium"><div class="code-header"><span class="code-title">📄 ${match[1] || "text"}</span><button class="copy-btn-premium" onclick="copyCodePremium('${id}', this)">📋 Copy</button></div><div class="code-content-premium" id="${id}"><pre><code class="language-${match[1] || "text"}">${escapeHtml(match[2].trim())}</code></pre></div></div>`;
+        pos = match.index + match[0].length;
+      }
+      
+      const remaining = content.substring(pos);
+      if (remaining.includes("```")) {
+        const langMatch = remaining.match(/```(\w*)/);
+        const lang = langMatch ? langMatch[1] : "code";
+        const codeStart = remaining.indexOf("```");
+        if (codeStart > 0) {
+          const txt = remaining.substring(0, codeStart);
+          if (txt.trim()) {
+            html += `<div class="normal-text">${marked.parse(txt)}</div>`;
+          }
+        }
+        html += getCodeLoadingHTML(lang);
+      } else if (remaining.trim()) {
+        html += `<div class="normal-text">${marked.parse(remaining)}</div>`;
+      }
+    } else {
+      const parts = [];
+      let last = 0;
+      const regex = /```(\w*)\n([\s\S]*?)```/g;
+      let match;
+      while ((match = regex.exec(content)) !== null) {
+        if (match.index > last) {
+          const txt = content.substring(last, match.index);
+          if (txt.trim()) parts.push({ type: "text", content: txt });
+        }
+        parts.push({ type: "code", language: match[1] || "text", code: match[2].trim() });
+        last = match.index + match[0].length;
+      }
+      if (last < content.length) {
+        const txt = content.substring(last);
+        if (txt.trim()) parts.push({ type: "text", content: txt });
+      }
+      parts.forEach(p => {
+        if (p.type === "text") {
+          html += `<div class="normal-text">${marked.parse(p.content)}</div>`;
+        } else {
+          const id = "c-" + Date.now() + "-" + Math.random().toString(36).substr(2, 6);
+          html += `<div class="code-box-premium"><div class="code-header"><span class="code-title">📄 ${p.language}</span><button class="copy-btn-premium" onclick="copyCodePremium('${id}', this)">📋 Copy</button></div><div class="code-content-premium" id="${id}"><pre><code class="language-${p.language}">${escapeHtml(p.code)}</code></pre></div></div>`;
+        }
+      });
+    }
+    html += "</div></div>";
+    return html;
+  }
+
+  function renderMessages(isStreaming = false) {
+    const chat = getCurrentChat();
+    if (!chat) return;
+    
+    if (isStreaming && chat.messages.length) {
+      const last = chat.messages[chat.messages.length - 1];
+      if (last && last.role === "assistant") {
+        if (renderFrame) cancelAnimationFrame(renderFrame);
+        renderFrame = requestAnimationFrame(() => {
+          const wrapper = chatContainer.lastElementChild;
+          if (wrapper && wrapper.querySelector(".ai-message")) {
+            const bubble = wrapper.querySelector(".ai-message");
+            const newHtml = formatResponse(last.content, `msg-${chat.messages.length - 1}`, true);
+            if (bubble.innerHTML !== newHtml) {
+              bubble.innerHTML = newHtml;
+              bubble.querySelectorAll("pre code").forEach(b => hljs.highlightElement(b));
+              // AUTO-SCROLL - Simple and reliable
+              autoScrollIfNeeded();
+            }
+          }
+          renderFrame = null;
+        });
+        return;
+      }
+    }
+    
+    chatContainer.innerHTML = "";
+    chat.messages.forEach((msg, idx) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = msg.role === "user" ? "flex justify-end mb-2" : "flex justify-start mb-2";
+      if (msg.role === "user") {
+        const bubble = document.createElement("div");
+        bubble.className = "user-message";
+        bubble.innerHTML = marked.parse(msg.content || "");
+        wrapper.appendChild(bubble);
+      } else {
+        const bubble = document.createElement("div");
+        bubble.className = "ai-message";
+        const isLast = idx === chat.messages.length - 1;
+        bubble.innerHTML = formatResponse(msg.content || "", `msg-${idx}`, isLast && isStreaming);
+        wrapper.appendChild(bubble);
+      }
+      chatContainer.appendChild(wrapper);
+    });
+    document.getElementById("thinking-indicator")?.remove();
+    document.querySelectorAll("pre code").forEach(b => hljs.highlightElement(b));
+    scrollToBottom();
+  }
+
+  function addThinking() {
+    document.getElementById("thinking-indicator")?.remove();
+    const div = document.createElement("div");
+    div.id = "thinking-indicator";
+    div.className = "flex justify-start mb-2";
+    div.innerHTML = `<div class="thinking-wrapper"><div class="thinking-dots"><span></span><span></span><span></span></div><span class="thinking-text">🤔 Thinking...</span></div>`;
+    chatContainer.appendChild(div);
+    scrollToBottom();
+  }
+  function removeThinking() { document.getElementById("thinking-indicator")?.remove(); }
+
+  function updateStream(content) {
+    const chat = getCurrentChat();
+    if (!chat) return;
+    const last = chat.messages[chat.messages.length - 1];
+    if (last && last.role === "assistant") {
+      if (last.content !== content) {
+        last.content = content;
+        removeThinking();
+        if (updateTimer) clearTimeout(updateTimer);
+        updateTimer = setTimeout(() => {
+          renderMessages(true);
+          updateTimer = null;
+        }, 30);
+      }
+    }
+  }
+
+  async function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+    if (!apiKey) { 
+      alert("Please set your OpenRouter API key in Settings"); 
+      document.getElementById("settingsModal").classList.add("active");
+      return; 
+    }
+    
+    const chat = getCurrentChat();
+    if (!chat) return;
+    
+    chat.messages.push({ role: "user", content: text });
+    chat.messages.push({ role: "assistant", content: "" });
+    if (chat.messages.length === 2) chat.title = text.substring(0, 20) + (text.length > 20 ? "..." : "");
+    saveChats();
+    renderChats();
+    renderMessages();
+    userInput.value = "";
+    userInput.style.height = "36px";
+    addThinking();
+    
+    try {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          model, 
+          messages: [...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []), ...chat.messages.slice(0, -1)], 
+          stream: true 
+        })
+      });
+      
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let full = "";
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        const lines = chunk.split("\n").filter(l => l.startsWith("data: "));
+        for (const line of lines) {
+          const data = line.replace("data: ", "").trim();
+          if (data === "[DONE]") continue;
+          try {
+            const json = JSON.parse(data);
+            const token = json.choices?.[0]?.delta?.content;
+            if (token) { 
+              full += token;
+              updateStream(full);
+            }
+          } catch(e) {}
+        }
+      }
+      
+      updateStream(full);
+      
+      if (voiceSettings.autoSpeak !== false && full.trim()) {
+        const msgId = `msg-${chat.messages.length - 1}`;
+        const button = document.querySelector(`[onclick*="${msgId}"]`);
+        speakTextWithControls(full, msgId, button);
+      }
+      
+    } catch(e) {
+      chat.messages[chat.messages.length - 1].content = "⚠ Error: " + e.message;
+      removeThinking();
+      renderMessages();
+    }
+    removeThinking();
+    if (updateTimer) clearTimeout(updateTimer);
+    renderMessages();
+    saveChats();
+  }
+
+  newChatBtn.onclick = newChat;
+  sendBtn.onclick = sendMessage;
+  userInput.onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
+  userInput.oninput = function() { this.style.height = "36px"; this.style.height = Math.min(this.scrollHeight, 80) + "px"; };
+  document.getElementById("openSidebar").onclick = () => sidebar.classList.remove("-translate-x-full");
+  document.getElementById("closeSidebar").onclick = () => sidebar.classList.add("-translate-x-full");
+  settingsBtn.onclick = () => { 
+    document.getElementById("apiKeyInput").value = apiKey; 
+    document.getElementById("modelInput").value = model; 
+    document.getElementById("systemPromptInput").value = systemPrompt; 
+    document.getElementById("settingsModal").classList.add("active"); 
+  };
+  document.getElementById("closeSettings").onclick = () => document.getElementById("settingsModal").classList.remove("active");
+  document.getElementById("saveSettings").onclick = () => {
+    apiKey = document.getElementById("apiKeyInput").value.trim();
+    model = document.getElementById("modelInput").value.trim();
+    systemPrompt = document.getElementById("systemPromptInput").value.trim();
+    localStorage.setItem("aanya_api_key", apiKey);
+    localStorage.setItem("aanya_model", model);
+    localStorage.setItem("aanya_system_prompt", systemPrompt);
+    document.getElementById("settingsModal").classList.remove("active");
+  };
+  document.getElementById("cancelRename").onclick = () => document.getElementById("renameModal").classList.remove("active");
+  document.getElementById("confirmRename").onclick = () => {
+    if (selectedChatId) { const c = chats.find(c => c.id === selectedChatId); if (c) { c.title = document.getElementById("renameInput").value.trim() || c.title; saveChats(); renderChats(); } }
+    document.getElementById("renameModal").classList.remove("active");
+  };
+  document.getElementById("cancelDelete").onclick = () => document.getElementById("deleteModal").classList.remove("active");
+  document.getElementById("confirmDelete").onclick = () => {
+    if (selectedChatId) {
+      chats = chats.filter(c => c.id !== selectedChatId);
+      if (currentChatId === selectedChatId) currentChatId = chats.length ? chats[0].id : null;
+      if (!currentChatId) newChat();
+      saveChats();
+      renderChats();
+      renderMessages();
+    }
+    document.getElementById("deleteModal").classList.remove("active");
+  };
+  window.onclick = (e) => { if (e.target.classList.contains("modal")) e.target.classList.remove("active"); };
+  
+  initVoiceControls();
+  initSpeechRecognition();
+  
+  if (chats.length === 0) newChat();
+  else { currentChatId = chats[0].id; renderChats(); renderMessages(); }
+  
+  setTimeout(() => { 
+    if (loading) loading.style.display = "none"; 
+    app.classList.remove("hidden"); 
+  }, 300);
+})();
+</script>
+
+</body>
+</html>
